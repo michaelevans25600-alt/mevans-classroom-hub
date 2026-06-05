@@ -1,0 +1,8 @@
+livekit-agents
+livekit-plugins-deepgram
+livekit-plugins-google
+python-dotenv
+chromadb
+pypdf
+
+Commit message: Fix requirements.txt
