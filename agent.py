@@ -415,4 +415,4 @@ GOOGLE_API_KEY=your_google_gemini_api_key
 - POST /token         → Get LiveKit room token
 - POST /index-notes   → Index student notes for RAG
 
-commit message:Add initial LiveKit voice agent
+commit message:Update agent.py with personas and RAG
