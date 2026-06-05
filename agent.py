@@ -302,14 +302,14 @@ async def health():
 @app.post("/token")
 async def get_token(req: TokenRequest):
     """Generate a LiveKit room token for a participant."""
-    token = AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET)
+    token = AccessToken(LIVEKIT API KEY, LIVEKIT API SECRET)
     token.with_identity(req.participant_identity)
     token.with_name(req.participant_name)
     token.with_grants(VideoGrants(
-        room_join=True,
+        room join=True,
         room=req.room_name,
-        can_publish=True,
-        can_subscribe=True,
+        can publish=True,
+        can subscribe=True,
     ))
     token.with_metadata(json.dumps(req.metadata))
     token.with_ttl(timedelta(hours=2))
@@ -317,7 +317,7 @@ async def get_token(req: TokenRequest):
     return {
         "token": token.to_jwt(),
         "room": req.room_name,
-        "url": LIVEKIT_URL,
+        "url": LIVEKIT URL,
     }
 
 
@@ -336,13 +336,13 @@ async def index_notes(req: IndexNotesRequest):
     
     return {
         "success": True,
-        "submission_id": req.submission_id,
+        "submission id": req.submission_id,
         "chunks": chunk_count,
-        "chars_indexed": len(text),
+        "chars indexed": len(text),
     }
 
 
-if __name__ == "__main__":
+if name == "main":
     uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
 ```
 
@@ -371,9 +371,9 @@ worker: python agent.py start
 
 ### `.env.example`
 ```bash
-LIVEKIT_URL=wss://your-project.livekit.cloud
-LIVEKIT_API_KEY=your_livekit_api_key
-LIVEKIT_API_SECRET=your_livekit_api_secret
+LIVEKIT URL=wss://your-project.livekit.cloud
+LIVEKIT API KEY=your_livekit_api_key
+LIVEKIT API SECRET=your_livekit_api_secret
 DEEPGRAM_API_KEY=your_deepgram_api_key
 GOOGLE_API_KEY=your_google_gemini_api_key
 ```
@@ -390,11 +390,11 @@ GOOGLE_API_KEY=your_google_gemini_api_key
 2. Click "New Project" → "Deploy from GitHub repo"
 3. Push this code to a GitHub repo and connect it
 4. Add environment variables in Railway dashboard:
-   - LIVEKIT_URL
-   - LIVEKIT_API_KEY  
-   - LIVEKIT_API_SECRET
-   - DEEPGRAM_API_KEY
-   - GOOGLE_API_KEY
+    LIVEKIT_URL
+    LIVEKIT_API_KEY  
+    LIVEKIT_API_SECRET
+    DEEPGRAM_API_KEY
+    GOOGLE_API_KEY
 5. Railway will auto-detect Python and deploy
 6. Copy your Railway URL (e.g. https://thinkspace-agent.up.railway.app)
 7. Paste it into your Base44 app settings
@@ -402,7 +402,7 @@ GOOGLE_API_KEY=your_google_gemini_api_key
 ## Deploy to Render
 
 1. Create free account at render.com
-2. New → Web Service → Connect GitHub repo
+2. New  Web Service : Connect GitHub repo
 3. Build Command: `pip install -r requirements.txt`
 4. Start Command: `uvicorn api:app --host 0.0.0.0 --port $PORT`
 5. Add environment variables
@@ -410,8 +410,8 @@ GOOGLE_API_KEY=your_google_gemini_api_key
 
 ## Endpoints
 
-- GET  /health        → Check server is running
-- POST /token         → Get LiveKit room token
-- POST /index-notes   → Index student notes for RAG
+ GET  /health:         Check server is running
+ POST /token:          Get LiveKit room token
+ POST /index-notes:    Index student notes for RAG
 
 commit message:Update agent.py with personas and RAG
