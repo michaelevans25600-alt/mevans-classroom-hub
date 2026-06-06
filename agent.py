@@ -1,14 +1,3 @@
-
-# File Structure
-# thinkspace agent/
-#  agent.py           Main LiveKit agent
-#  rag.py             Note scanning / RAG logic  
-#  api.py             HTTP endpoints (token, upload)
-#  requirements.txt   Dependencies
-#  Procfile           For Railway/Render
-#  .env.example       Environment variables template
-#  README.md          Deploy instructions
-
 import asyncio
 import os
 import logging
