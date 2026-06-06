@@ -1,6 +1,5 @@
 import os
 import json
-import asyncio
 from datetime import timedelta
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,10 +10,10 @@ import uvicorn
 
 app = FastAPI(title="ThinkSpace Agent API")
 
-# Allow requests from your Base44 app
+# Allow requests from your frontend app
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Replace with your Base44 app URL in production
+    allow_origins=["*"],  # Replace with your frontend URL in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
