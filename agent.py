@@ -96,8 +96,8 @@ async def entrypoint(ctx: JobContext):
         import json
         try:
             room_meta = json.loads(ctx.room.metadata)
-        except:
-            pass
+        except Exception as e:
+            logger.warning(f"Failed to parse room metadata: {e}")
     
     persona_id = room_meta.get("persona", "dr_amara")
     subject = room_meta.get("subject", "General")
