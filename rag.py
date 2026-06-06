@@ -2,7 +2,6 @@ import os
 import json
 import asyncio
 import httpx
-from typing import Optional
 
 # Simple in-memory store for note chunks
 # In production, swap with ChromaDB or Pinecone
@@ -44,19 +43,25 @@ async def retrieve_notes(submission_id: str, max_chars: int = 2000) -> str:
 async def extract_text_from_url(file_url: str) -> str:
     """Extract text from a file URL (supports plain text and basic PDFs)."""
     async with httpx.AsyncClient(timeout=30) as client:
-        response = await client.get(file_url)
-        content_type = response.headers.get("content-type", "")
-        
-        if "text" in content_type:
-            return response.text[:10000]
-        
-        # For PDFs, try to extract readable text
-        # Basic extraction — for production use PyMuPDF or pdfplumber
-        raw = response.content
         try:
-            # Try UTF-8 decode, strip non-printable
-            text = raw.decode("utf-8", errors="ignore")
-            printable = "".join(c for c in text if c.isprintable() or c in "\n\t ")
-            return printable[:10000]
-        except:
+            response = await client.get(file_url)
+            response.raise_for_status()
+            content_type = response.headers.get("content-type", "")
+            
+            if "text" in content_type:
+                return response.text[:10000]
+            
+            # For PDFs, try to extract readable text
+            # Basic extraction — for production use PyMuPDF or pdfplumber
+            raw = response.content
+            try:
+                # Try UTF-8 decode, strip non-printable
+                text = raw.decode("utf-8", errors="ignore")
+                printable = "".join(c for c in text if c.isprintable() or c in "\n\t ")
+                return printable[:10000]
+            except Exception as e:
+                print(f"Failed to decode PDF content: {e}")
+                return ""
+        except Exception as e:
+            print(f"Failed to fetch file from URL: {e}")
             return ""
